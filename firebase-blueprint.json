@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Folder": {
+      "title": "Folder",
+      "description": "Folder to organize articles",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "color": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "Article generated, edited, and saved by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "topic": { "type": "string" },
+        "selectedTitle": { "type": "string" },
+        "selectedSubtitle": { "type": "string" },
+        "contentMarkdown": { "type": "string" },
+        "tags": { "type": "array" },
+        "sources": { "type": "array" },
+        "factCheck": { "type": "array" },
+        "aiDisclosure": { "type": "string" },
+        "wordCount": { "type": "number" },
+        "readingTimeMinutes": { "type": "number" },
+        "isFavorite": { "type": "boolean" },
+        "folderId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "selectedTitle", "contentMarkdown"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile collection stored by auth UID"
+    },
+    "/users/{userId}/folders/{folderId}": {
+      "schema": { "$ref": "#/entities/Folder" },
+      "description": "Folders created by the user"
+    },
+    "/users/{userId}/articles/{articleId}": {
+      "schema": { "$ref": "#/entities/Article" },
+      "description": "Articles created, edited, or saved by the user"
+    }
+  }
+}
